@@ -10,7 +10,7 @@ import { faHeart } from "@fortawesome/free-solid-svg-icons";
 const Post = ({ post }) => {
   const PF = "http://localhost:5000/images/";
   const { user } = useContext(Context);
-  const [liked, setLiked] = useState(post.likes.includes(user.username));
+  const [liked, setLiked] = useState(user? post.likes.includes(user.username) : false);
   const [likes, setLikes] = useState(post.likes.length);
   
   const handleLike = async () => {
