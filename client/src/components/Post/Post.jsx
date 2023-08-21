@@ -1,6 +1,6 @@
 import "./Post.css";
 import { Link } from "react-router-dom";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import { Context } from "../../context/Context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -12,14 +12,19 @@ const Post = ({ post }) => {
   const { user } = useContext(Context);
   const [liked, setLiked] = useState(post.likes.includes(user.username));
   const [likes, setLikes] = useState(post.likes.length);
-
-
+  
   const handleLike = async () => {
     try {
       const res = await axios.put(`/api/posts/${post._id}/like`, {
         username: user.username,
       });
-      setLikes(res.data.likes.length);
+      if(liked==false){
+        setLikes(res.data.likes.length + 1);
+      }
+      else if(liked==true){
+        setLikes(res.data.likes.length - 1);
+      }
+      
       setLiked(!liked);
     } catch (err) {
       console.error("Error liking post:", err);
