@@ -1,0 +1,70 @@
+.register {
+    /* height: calc(100vh-50px); */
+    height: calc(100vh);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* background: linear-gradient(
+        rgba(255, 255, 255, 0.2),
+        rgba(255, 255, 255, 0.2)
+      ),
+      url("https://img.freepik.com/free-vector/background-realistic-abstract-technology-particle_23-2148431735.jpg?w=740&t=st=1692174937~exp=1692175537~hmac=88532548a6168911c4e057de139e9694b686fdd7f437a97c5e3f18d764ed5d67");
+    background-size: cover; */
+
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    margin-top: 20px;
+    text-align: center;
+    background: rgba( 255, 255, 255, 0.25 );
+  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+  backdrop-filter: blur( 4px );
+  -webkit-backdrop-filter: blur( 4px );
+  border-radius: 10px;
+  border: 1px solid rgba( 255, 255, 255, 0.18 );
+  }
+  
+  .registerTitle{
+      font-size: 50px;
+  }
+  
+  .registerForm{
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+  }
+  
+  .registerForm > label{
+      margin: 10px 0;
+  }
+  
+  .registerInput{
+      padding: 10px;
+      background-color: white;
+      border: none;
+  
+  }
+  
+  .registerButton{
+      margin-top: 20px;
+      cursor: pointer;
+      background-color: teal;
+      border: none;
+      color: white;
+      border-radius: 10px;
+      padding: 10px;
+      
+  }
+  
+  .registerLoginButtton{
+      position: absolute;
+      top: 60px;
+      right: 20px;
+      background-color: lightcoral;
+      cursor: pointer;
+      border: none;
+      padding: 10px;
+      color: white;
+      border-radius: 10px;
+  }
