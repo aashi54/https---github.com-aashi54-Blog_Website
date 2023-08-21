@@ -3,6 +3,8 @@ import { Link, useLoaderData, useLocation } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { Context } from "../../context/Context";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
 
 const SinglePost = () => {
   const location = useLocation();
@@ -13,6 +15,8 @@ const SinglePost = () => {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [updateMode, setUpdateMode] = useState(false);
+  const [liked, setLiked] = useState(false);
+  const [likes, setLikes] = useState(0);
 
   useEffect(() => {
     const getPost = async () => {
@@ -20,9 +24,11 @@ const SinglePost = () => {
       setPost(res.data);
       setTitle(res.data.title);
       setDesc(res.data.desc);
+      setLiked(res.data.likes.includes(user?.username));
+      setLikes(res.data.likes.length);
     };
     getPost();
-  }, [path]);
+  }, [path, user]);
 
   const handleDelete = async () => {
     try {
@@ -35,6 +41,18 @@ const SinglePost = () => {
     } catch (err) {
       console.log(user);
       // console.log(err);
+    }
+  };
+
+  const handleLike = async () => {
+    try {
+      const res = await axios.put(`/api/posts/${post._id}/like`, {
+        username: user.username,
+      });
+      setLiked(!liked);
+      setLikes(res.data.likes.length);
+    } catch (err) {
+      console.error("Error liking post:", err);
     }
   };
 
@@ -81,8 +99,16 @@ const SinglePost = () => {
             )}
           </h1>
         )}
+        <div className="like-button" onClick={handleLike}>
+            <FontAwesomeIcon
+              icon={faHeart}
+              className={`heart-icon ${liked ? "liked" : ""}`}
+            />
+            <span className="like-count">{likes}</span>
+          </div>
 
         <div className="singlePostInfo">
+        
           <span className="singlePostAuthor">
             Autor:
             <Link to={`/?user=${post.username}`} className="link">

@@ -62,3 +62,20 @@
 .btn{
     float: right;
 }
+
+.like-button{
+    margin: 10px;
+}
+
+.heart-icon {
+    cursor: pointer;
+    transition: color 0.3s ease-in-out;
+  }
+  
+  .liked {
+    color: red;
+  }
+
+  .like-count{
+    padding-left: 5px;
+  }
