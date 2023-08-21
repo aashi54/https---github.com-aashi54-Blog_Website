@@ -72,6 +72,21 @@ router.get("/:id", async (req, res) => {
     }
   });
 
+// get user posts who logged in 
+
+router.get("/user/:username", async (req, res) => {
+  try {
+    const posts = await Post.find({ username: req.params.username });
+    res.status(200).json(posts);
+  } catch (err) {
+    console.error("Error fetching user's posts:", err);
+    res.status(500).json(err);
+  }
+});
+
+
+
+
 //Get all posts
 
 router.get("/", async (req, res) => {

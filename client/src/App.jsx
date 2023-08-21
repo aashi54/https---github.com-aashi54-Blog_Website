@@ -12,6 +12,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useContext } from "react";
 import Contact from "./components/Pages/Contact/Contact";
 import About from "./components/Pages/About/About";
+import MyPosts from "./components/Pages/MyPosts/MyPosts";
 
 function App() {
   const {user} = useContext(Context);
@@ -28,6 +29,7 @@ function App() {
         <Route path="/login" element={user ? <Homepage /> : <Login />} />
         <Route path="/posts/:id" element={<Single />} />
         <Route path="/write" element={user ? <Write /> : <Login />} />
+        <Route path="/mypost" element={user ? <MyPosts /> : <Login />} />
         <Route path="/settings" element={user ? <Settings /> : <Login />} />
       </Routes>
     </Router>
