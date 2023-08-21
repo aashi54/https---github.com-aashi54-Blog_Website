@@ -49,12 +49,19 @@ const SinglePost = () => {
       const res = await axios.put(`/api/posts/${post._id}/like`, {
         username: user.username,
       });
+      if(liked==false){
+        setLikes(res.data.likes.length + 1);
+      }
+      else if(liked==true){
+        setLikes(res.data.likes.length - 1);
+      }
+      
       setLiked(!liked);
-      setLikes(res.data.likes.length);
     } catch (err) {
       console.error("Error liking post:", err);
     }
   };
+
 
 
    const handleUpdate = async() =>{
