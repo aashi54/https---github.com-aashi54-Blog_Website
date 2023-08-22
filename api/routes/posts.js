@@ -12,7 +12,7 @@ router.post("/", async (req, res) => {
     res.status(500).json(err);
   }
 });
-
+/home/developer/Chhatrapal/asmita/https---github.com-aashi54-Blog_Website/api/routes/posts.js
 //Update post
 
 router.put("/:id", async (req, res) => {
@@ -44,11 +44,10 @@ router.put("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
     try {
       const post = await Post.findById(req.params.id);
-      console.log(post.username, req.body, typeof req.body.username, typeof post.username, "Post");
       
-      if (post.username === "user9") {
+      if (post.username) {
         try {
-          await post.delete();
+          await Post.deleteOne(post);
           res.status(200).json("Post has been deleted...");
         } catch (err) {
           res.status(500).json(err);
