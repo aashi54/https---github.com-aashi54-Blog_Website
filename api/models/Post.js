@@ -27,7 +27,11 @@ const PostSchema = new mongoose.Schema(
         required:false
     },
 
-    likes: {
+    thumbsUp: {
+      type: Array,
+      default: [],
+    },
+    thumbsDown: {
       type: Array,
       default: [],
     },

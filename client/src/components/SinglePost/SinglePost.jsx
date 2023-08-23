@@ -4,7 +4,8 @@ import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { Context } from "../../context/Context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { faThumbsUp, faThumbsDown } from "@fortawesome/free-solid-svg-icons";
+
 
 const SinglePost = () => {
   const location = useLocation();
@@ -15,17 +16,25 @@ const SinglePost = () => {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [updateMode, setUpdateMode] = useState(false);
-  const [liked, setLiked] = useState(false);
-  const [likes, setLikes] = useState(0);
+  const [thumbsUp, setThumbsUp] = useState(false);
+  const [thumbsDown, setThumbsDown] = useState(false);
+  const [thumbsUpCount, setThumbsUpCount] = useState(0);
+  const [thumbsDownCount, setThumbsDownCount] = useState(0);
 
   useEffect(() => {
-    const getPost = async () => {
-      const res = await axios.get(`/api/posts/${path}`);
-      setPost(res.data);
-      setTitle(res.data.title);
-      setDesc(res.data.desc);
-      setLiked(res.data.likes.includes(user?.username));
-      setLikes(res.data.likes.length);
+     const getPost = async () => {
+      try {
+        const res = await axios.get(`/api/posts/${path}`);
+        setPost(res.data);
+        setTitle(res.data.title);
+        setDesc(res.data.desc);
+        setThumbsUp(res.data.thumbsUp.includes(user?.username));
+        setThumbsDown(res.data.thumbsDown.includes(user?.username));
+        setThumbsUpCount(res.data.thumbsUp.length);
+        setThumbsDownCount(res.data.thumbsDown.length);
+      } catch (err) {
+        console.error("Error fetching post:", err);
+      }
     };
     getPost();
   }, [path, user]);
@@ -44,40 +53,41 @@ const SinglePost = () => {
     }
   };
 
-  const handleLike = async () => {
+  const handleThumbsUp = async () => {
     try {
-      const res = await axios.put(`/api/posts/${post._id}/like`, {
+      const res = await axios.put(`/api/posts/${post._id}/thumbsUp`, {
         username: user.username,
       });
-      if(liked==false){
-        setLikes(res.data.likes.length + 1);
+
+      if (thumbsDown) {
+        setThumbsDownCount(thumbsDownCount - 1);
+        setThumbsDown(false);
       }
-      else if(liked==true){
-        setLikes(res.data.likes.length - 1);
-      }
-      
-      setLiked(!liked);
+
+      setThumbsUp(!thumbsUp);
+      setThumbsUpCount(res.data.thumbsUpCount);
     } catch (err) {
-      console.error("Error liking post:", err);
+      console.error("Error updating thumbs-up:", err);
     }
   };
 
+  const handleThumbsDown = async () => {
+    try {
+      const res = await axios.put(`/api/posts/${post._id}/thumbsDown`, {
+        username: user.username,
+      });
 
+      if (thumbsUp) {
+        setThumbsUpCount(thumbsUpCount - 1);
+        setThumbsUp(false);
+      }
 
-   const handleUpdate = async() =>{
-           try{
-            await axios.put(`/api/posts/${post._id}` , {
-             username: user.username,
-              title, 
-              desc,
-            });
-            // window.location.reload()
-            setUpdateMode(false)
-
-           }catch(err){
-
-           }
-   }
+      setThumbsDown(!thumbsDown);
+      setThumbsDownCount(res.data.thumbsDownCount);
+    } catch (err) {
+      console.error("Error updating thumbs-down:", err);
+    }
+  };
 
 
 
@@ -106,13 +116,20 @@ const SinglePost = () => {
             )}
           </h1>
         )}
-        <div className="like-button" onClick={handleLike}>
-            <FontAwesomeIcon
-              icon={faHeart}
-              className={`heart-icon ${liked ? "liked" : ""}`}
-            />
-            <span className="like-count">{likes}</span>
-          </div>
+         <div className="thumbs-button-container">
+          <FontAwesomeIcon
+            icon={faThumbsUp}
+            className={`thumbs-icon ${thumbsUp ? "thumbs-up" : ""}`}
+            onClick={handleThumbsUp}
+          />
+          <span className="thumbs-count">{thumbsUpCount}</span>
+          <FontAwesomeIcon
+            icon={faThumbsDown}
+            className={`thumbs-icon ${thumbsDown ? "thumbs-down" : ""}`}
+            onClick={handleThumbsDown}
+          />
+          <span className="thumbs-count">{thumbsDownCount}</span>
+        </div>
 
         <div className="singlePostInfo">
         

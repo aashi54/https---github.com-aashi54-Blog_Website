@@ -63,20 +63,23 @@
     float: right;
 }
 
-.like-button{
-    margin: 10px;
-    
-}
-
-.heart-icon {
+.thumbs-icon {
+    margin-right: 5px;
     cursor: pointer;
-    transition: color 0.3s ease-in-out;
+    transition: color 0.3s ease;
+    color: #b39656;
   }
   
-  .liked {
-    color: red;
+  .thumbs-up{
+    color: green;
   }
-
-  .like-count{
-    padding-left: 5px;
+  .thumbs-down{
+    color: red; 
+  }
+  
+ 
+  .thumbs-count {
+    margin-right: 5px;
+    font-size: 14px;
+    color: #666;
   }

@@ -13,7 +13,8 @@ const cors = require("cors");
 // dotenv.config();
 app.use(cors());
 app.use(express.json());
-app.use("/images", express.static(path.join(__dirname, "/images")))
+app.use("/images", express.static(path.join(__dirname, "/images")));
+
 
 
 mongoose.connect('mongodb+srv://asmita:asmita4321@blog.phtbcqt.mongodb.net/?retryWrites=true&w=majority', {
@@ -44,6 +45,7 @@ app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 app.use("/api/posts", postRoute);
 app.use("/api/categories", categoryRoute);
+
 
 // app.use("/", (req, res) => {
 //   console.log("heyy this is main URL");

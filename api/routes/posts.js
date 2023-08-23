@@ -110,17 +110,75 @@ router.get("/", async (req, res) => {
     }
   });
 
-  // Like functionality
+  // Like dislike functionality
 
-router.put("/:id/like", async (req, res) => {
+// Update the thumbs-up
+router.put("/:id/thumbsUp", async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
-    if (!post.likes.includes(req.body.username)) {
-      await post.updateOne({ $push: { likes: req.body.username } });
-      res.status(200).json(post);
+
+
+    if (post.thumbsDown.includes(req.body.username)) {
+      await post.updateOne({ $pull: { thumbsDown: req.body.username } });
+    }
+
+    if (!post.thumbsUp.includes(req.body.username)) {
+  
+      await post.updateOne({ $push: { thumbsUp: req.body.username } });
+
+  
+      const updatedPost = await Post.findById(req.params.id);
+      const thumbsUpCount = updatedPost.thumbsUp.length;
+      const thumbsDownCount = updatedPost.thumbsDown.length;
+
+      res.status(200).json({ thumbsUpCount, thumbsDownCount });
     } else {
-      await post.updateOne({ $pull: { likes: req.body.username } });
-      res.status(200).json(post);
+      
+      await post.updateOne({ $pull: { thumbsUp: req.body.username } });
+
+      
+      const updatedPost = await Post.findById(req.params.id);
+      const thumbsUpCount = updatedPost.thumbsUp.length;
+      const thumbsDownCount = updatedPost.thumbsDown.length;
+
+      res.status(200).json({ thumbsUpCount, thumbsDownCount });
+    }
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+// Update the thumbs-down
+router.put("/:id/thumbsDown", async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    const username = req.body.username;
+
+    
+    if (post.thumbsUp.includes(req.body.username)) {
+      await post.updateOne({ $pull: { thumbsUp: req.body.username } });
+    }
+
+    if (!post.thumbsDown.includes(username)) {
+     
+      await post.updateOne({ $push: { thumbsDown: username } });
+
+    
+      const updatedPost = await Post.findById(req.params.id);
+      const thumbsUpCount = updatedPost.thumbsUp.length;
+      const thumbsDownCount = updatedPost.thumbsDown.length;
+
+      res.status(200).json({ thumbsUpCount, thumbsDownCount });
+    } else {
+      
+      await post.updateOne({ $pull: { thumbsDown: username } });
+
+    
+      const updatedPost = await Post.findById(req.params.id);
+      const thumbsUpCount = updatedPost.thumbsUp.length;
+      const thumbsDownCount = updatedPost.thumbsDown.length;
+
+      res.status(200).json({ thumbsUpCount, thumbsDownCount });
     }
   } catch (err) {
     res.status(500).json(err);

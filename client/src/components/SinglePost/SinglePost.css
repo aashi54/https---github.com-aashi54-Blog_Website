@@ -102,21 +102,3 @@
     cursor: pointer;
   }
 
-
-  .heart-icon {
-    margin-right: 5px;
-    cursor: pointer;
-    transition: color 0.3s ease;
-    color: #b39656;
-  }
-  
-  .liked {
-    color: red; /* Change color to red when liked */
-  }
-  
-  /* Like Count */
-  .like-count {
-    margin-left: 5px;
-    font-size: 14px;
-    color: #666;
-  }
