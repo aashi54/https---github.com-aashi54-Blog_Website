@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import "./topbar.css";
 import { useContext } from "react";
 import { Context } from "../../context/Context";
+import Payment from "./Payment";
 
 export default function Topbar() {
   const { user, dispatch } = useContext(Context);
@@ -71,6 +72,7 @@ export default function Topbar() {
             </li>
           </ul>
         )}
+        <Payment/>
         <i className="topSearchIcon fas fa-search"></i>
       </div>
     </div>

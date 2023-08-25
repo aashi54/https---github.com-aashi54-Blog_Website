@@ -68,6 +68,30 @@ router.get("/:id", async (req,res)=> {
 });
 
 
+// Update user subscription
+router.put("/:userId/update-subscription", async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const { isSubscribed } = req.body;
+
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { isSubscribed },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+  
+    res.status(200).json(updatedUser);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
+
 
 
 module.exports = router;

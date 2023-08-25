@@ -13,9 +13,16 @@ import { useContext } from "react";
 import Contact from "./components/Pages/Contact/Contact";
 import About from "./components/Pages/About/About";
 import MyPosts from "./components/Pages/MyPosts/MyPosts";
+import PaymentHistory from "./PaymentHistory";
 
 function App() {
   const {user} = useContext(Context);
+
+  function isUserSubscribed(user) {
+    return user && user.isSubscribed;
+  }
+
+  const isSubscribed = isUserSubscribed(user);
 
   return (
     <Router>
@@ -31,6 +38,7 @@ function App() {
         <Route path="/write" element={user ? <Write /> : <Login />} />
         <Route path="/mypost" element={user ? <MyPosts /> : <Login />} />
         <Route path="/settings" element={user ? <Settings /> : <Login />} />
+        <Route path="/payment-history" element={isSubscribed? <PaymentHistory/> : <Login/>} />
       </Routes>
     </Router>
   );

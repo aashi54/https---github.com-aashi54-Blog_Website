@@ -22,6 +22,11 @@ const UserSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
+    
+    isSubscribed: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );

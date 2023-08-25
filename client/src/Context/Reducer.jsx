@@ -42,6 +42,12 @@ const Reducer = (state, action) => {
           error: false,
         };
 
+        case "UPDATE_ORDER_ID":
+      return {
+        ...state,
+        orderId: action.payload,
+      };
+
       default:
         return state;
     }

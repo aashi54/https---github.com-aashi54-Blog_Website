@@ -1,0 +1,16 @@
+.premium-user-icon {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.premium{
+    padding: 10px;
+    background-color:#FFA500;
+    color: yellow;
+    border-radius: 5px;
+}
+
+.premium:hover{
+    background-color:#daa520 ;
+}

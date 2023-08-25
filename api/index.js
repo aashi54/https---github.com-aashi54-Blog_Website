@@ -9,6 +9,8 @@ const categoryRoute = require("./routes/categories");
 const multer = require("multer");
 const path = require("path")
 const cors = require("cors"); 
+const payment = require('./routes/payment');
+
 
 // dotenv.config();
 app.use(cors());
@@ -16,6 +18,12 @@ app.use(express.json());
 app.use("/images", express.static(path.join(__dirname, "/images")));
 
 
+
+var bodyParser = require('body-parser');
+
+app.use(bodyParser.json());
+
+app.use(bodyParser.urlencoded({ extended: true }));
 
 mongoose.connect('mongodb+srv://asmita:asmita4321@blog.phtbcqt.mongodb.net/?retryWrites=true&w=majority', {
     useNewUrlParser: true,
@@ -45,7 +53,8 @@ app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 app.use("/api/posts", postRoute);
 app.use("/api/categories", categoryRoute);
-
+// app.use("/api/payment", payment);
+app.use('/api/payment', require('./routes/payment'));
 
 // app.use("/", (req, res) => {
 //   console.log("heyy this is main URL");

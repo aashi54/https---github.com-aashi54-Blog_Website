@@ -4,8 +4,10 @@ import { Link } from "react-router-dom";
 import axios from "axios"
 import { Context } from "../../../context/Context";
 import Header from '../../Header/Header';
+import { useAuth } from "../../../context/Context";
 
 const Login = () => {
+  const { setUser } = useAuth();
   const userRef = useRef();
   const passwordRef = useRef();
   const {dispatch, isFetching}=  useContext(Context)
@@ -18,6 +20,8 @@ const Login = () => {
         username: userRef.current.value,
         password: passwordRef.current.value,
       });
+
+      setUser(res.data);
       dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
     } catch (err) {
       dispatch({ type: "LOGIN_FAILURE" });
@@ -46,8 +50,9 @@ const Login = () => {
         />
 
         <button className="loginButton" type="submit" disabled={isFetching}>
-          Login
+          Login 
         </button>
+     
       </form>
       {/* <button className="loginRegisterButtton">Register</button> */}
     </div>

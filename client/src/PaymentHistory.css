@@ -1,0 +1,33 @@
+.payment-history-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .payment-table {
+    width: 80%;
+    border-collapse: collapse;
+    border: 1px solid #ccc;
+    margin-top: 20px;
+  }
+  
+  .payment-table th,
+  .payment-table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .payment-table th {
+    background-color: #f2f2f2;
+  }
+  
+  .payment-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .payment-table tbody tr:hover {
+    background-color: #e0e0e0;
+  }
+  
